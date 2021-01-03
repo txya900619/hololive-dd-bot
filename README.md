@@ -1,2 +1,2 @@
-# hololive_dd_bot
+# hololive-dd-bot
 A hololive dd telegram bot(subscribe all hololive member's twitter)
