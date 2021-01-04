@@ -16,7 +16,14 @@ async fn main() {
         })
         .try_for_each(|m| {
             if let StreamMessage::Tweet(tweet) = m {
-                print!("{:?}\n", tweet)
+                match &tweet.user {
+                    Some(user) => {
+                        if user.id == 1283657064410017793 {
+                            print!("{:?}\n", tweet)
+                        }
+                    }
+                    None => (),
+                }
             } else {
                 println!("{:?}", m);
             }
