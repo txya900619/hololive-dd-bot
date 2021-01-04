@@ -2,10 +2,12 @@ mod config;
 use futures::TryStreamExt;
 
 use egg_mode::{stream::StreamMessage, KeyPair, Token};
-
+use teloxide::prelude::*;
 #[tokio::main]
 async fn main() {
+    teloxide::enable_logging!();
     let config = config::Config::from_env().unwrap();
+    let bot = Bot::from_env();
     println!("Ctrl-C to quit\n");
 
     let stream = egg_mode::stream::filter()
@@ -19,6 +21,7 @@ async fn main() {
                 match &tweet.user {
                     Some(user) => {
                         if user.id == 1283657064410017793 {
+                            bot.send_message(-1001288036225, format!("{:?}", tweet));
                             print!("{:?}\n", tweet)
                         }
                     }
