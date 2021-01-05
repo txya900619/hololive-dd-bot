@@ -1,5 +1,5 @@
 mod config;
-use futures::TryStreamExt;
+use futures::{executor::block_on, TryStreamExt};
 
 use egg_mode::{stream::StreamMessage, KeyPair, Token};
 use teloxide::prelude::*;
@@ -27,7 +27,9 @@ async fn main() {
                 match &tweet.user {
                     Some(user) => {
                         if holo_member.contains(&user.id) {
-                            bot.send_message(-1001288036225, format!("{:?}", tweet));
+                            let _ = bot
+                                .send_message(-1001288036225, format!("{:?}", tweet))
+                                .send();
                         }
                     }
                     None => (),
