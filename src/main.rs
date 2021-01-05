@@ -10,8 +10,14 @@ async fn main() {
     let bot = Bot::from_env();
     println!("Ctrl-C to quit\n");
 
+    let holo_member: &[u64] = &[
+        1283657064410017793, // gura
+        997786053124616192,  //fubuki
+        996645451045617664,  //matsuri
+    ];
+
     let stream = egg_mode::stream::filter()
-        .follow(&[1283657064410017793])
+        .follow(holo_member)
         .start(&Token::Access {
             consumer: KeyPair::new(config.api_key, config.api_secret),
             access: KeyPair::new(config.access_token, config.access_secret),
@@ -20,9 +26,8 @@ async fn main() {
             if let StreamMessage::Tweet(tweet) = m {
                 match &tweet.user {
                     Some(user) => {
-                        if user.id == 1283657064410017793 {
+                        if holo_member.contains(&user.id) {
                             bot.send_message(-1001288036225, format!("{:?}", tweet));
-                            print!("{:?}\n", tweet)
                         }
                     }
                     None => (),
