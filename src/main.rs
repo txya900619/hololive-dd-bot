@@ -33,7 +33,7 @@ async fn main() {
                     Some(user) => {
                         if holo_member.contains(&user.id) {
                             block_on(
-                                bot.send_message(-1001288036225, format!("{:?}", tweet))
+                                bot.send_message(-1001288036225, format!("{}", tweet.text))
                                     .send(),
                             )
                             .unwrap();
