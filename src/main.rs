@@ -1,5 +1,5 @@
 mod config;
-use futures::TryStreamExt;
+use futures::{executor::block_on, TryStreamExt};
 
 use egg_mode::{stream::StreamMessage, KeyPair, Token};
 use teloxide::prelude::*;
@@ -16,6 +16,11 @@ async fn main() {
         996645451045617664,  //matsuri
     ];
 
+    bot.send_message(-1001288036225, "Hello world!")
+        .send()
+        .await
+        .unwrap();
+
     let stream = egg_mode::stream::filter()
         .follow(holo_member)
         .start(&Token::Access {
@@ -27,9 +32,11 @@ async fn main() {
                 match &tweet.user {
                     Some(user) => {
                         if holo_member.contains(&user.id) {
-                            let _ = bot
-                                .send_message(-1001288036225, format!("{:?}", tweet))
-                                .send();
+                            block_on(
+                                bot.send_message(-1001288036225, format!("{:?}", tweet))
+                                    .send(),
+                            )
+                            .unwrap();
                             print!("{:?}", tweet)
                         }
                     }
