@@ -1,5 +1,5 @@
 mod config;
-use futures::{executor::block_on, TryStreamExt};
+use futures::TryStreamExt;
 
 use egg_mode::{stream::StreamMessage, KeyPair, Token};
 use teloxide::prelude::*;
@@ -30,6 +30,7 @@ async fn main() {
                             let _ = bot
                                 .send_message(-1001288036225, format!("{:?}", tweet))
                                 .send();
+                            print!("{:?}", tweet)
                         }
                     }
                     None => (),
