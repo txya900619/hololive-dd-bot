@@ -36,7 +36,7 @@ async fn main() {
                                 bot.send_message(
                                     -1001288036225,
                                     format!(
-                                        "https://twitter.com/{}/{}",
+                                        "https://twitter.com/{}/status/{}",
                                         user.screen_name, tweet.id
                                     ),
                                 )
